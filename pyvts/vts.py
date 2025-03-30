@@ -76,11 +76,12 @@ class vts:
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-    async def connect(self) -> None:
+    async def connect(self, timeout=10.0) -> None:
         """Connect to VtubeStudio API server"""
         try:
             self.websocket = await websockets.connect(
-                "ws://" + self.host + ":" + str(self.port)
+                "ws://" + self.host + ":" + str(self.port),
+                open_timeout=timeout
             )
             self.__connection_status = 1
         except error.ConnectionError as e:
